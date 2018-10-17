@@ -1,0 +1,10 @@
+***
+This python library contains tools allowing the processing of data files obtained during the caracterization of the DRE-DEMUX prototype:
+- general_tools.py: general purpose functions.
+- get_data.py: tools to read tests data from binary files.
+- gbw.py: tools to characterize the gain band width (gbw) of the BBFB.
+- dumps.py: tools to analyse data dumps (ADC, BIAS and FEEDBACK dumps or SCIENCE DATA)
+- energy_resol.py: tools to characterize the energy resolution of the DRE-DEMUX prototype.
+- analyse_demux_perfs.py: main script. 
+***
+ 

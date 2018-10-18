@@ -13,78 +13,44 @@
 
     Routine listing
     ===============
-    get_conf()
+    get_conf_csv()
+    print_conf()
+
     """
 
 # -----------------------------------------------------------------------
 # Imports
-import os
-
+import os, csv
 
 # -----------------------------------------------------------------------
-def get_conf(local=True):
+def get_conf_csv():
     r"""
-        This function gets the configuration for the data processing
+        This function gets the configuration for the data processing of
+        demux prototype files from a csv file.
         (path, ...).
-
-        Parameters
-        ----------
-        local : boolean
-        If True, the data are located locally on the computer
-        If False, the data are processed remotely on the GSE
-        (default is True)
 
         Returns
         -------
-        conf : dictionnary
+        config : dictionnary
 
         """
 
-    config={\
-        'path_tests': '', \
-        'dir_data': 'data', \
-        'dir_hk': 'hk', \
-        'dir_plots': 'plots', \
-        'dir_logs': 'logs', \
-        'ScBandMin': 20., \
-        'ScBandMax': 600., \
-        'SNR_pix': -131.4, \
-        'DRD': -166, \
-        'Cf': 4.5 }
+    config={}
+    conffilename = "demux_tools_cfg.csv"
 
-
-    conffilename = "demux_tools.config"
-    
     if not os.path.exists(conffilename):
         print("Configuration file not found.")
         print("It is required to define the path.")
     else:
-        print("Loading project path from file ", conffilename)
-        conffile = open(conffilename, 'r')
-        line = conffile.readline().split(' ')
-        config['path_tests'] = line[1][:-1]
-        line = conffile.readline().split(' ')
-        config['dir_data'] = line[1][:-1]
-        line = conffile.readline().split(' ')
-        config['dir_hk'] = line[1][:-1]
-        line = conffile.readline().split(' ')
-        config['dir_plots'] = line[1][:-1]
-        line = conffile.readline().split(' ')
-        config['dir_logs'] = line[1][:-1]
-        line = conffile.readline().split(' ')
-        config['ScBandMin'] = float(line[1][:-1])
-        line = conffile.readline().split(' ')
-        config['ScBandMax'] = float(line[1][:-1])
-        line = conffile.readline().split(' ')
-        config['SNR_pix'] = float(line[1][:-1])
-        line = conffile.readline().split(' ')
-        config['DRD'] = float(line[1][:-1])
-        line = conffile.readline().split(' ')
-        config['Cf'] = float(line[1][:-1])
-        conffile.close()
-        
-        return(config)
+        with open(conffilename, newline='') as csvfile:
+            conf_reader = csv.reader(csvfile, delimiter=';', quotechar='|')
+            for row in conf_reader:
+                try:    # for numbers
+                    config[row[0]]=float(row[1].replace(',','.'))
+                except: # for strings
+                    config[row[0]]=row[1].replace(',','.')
 
+    return(config)
 
 # -----------------------------------------------------------------------
 def print_conf(config):
@@ -94,7 +60,7 @@ def print_conf(config):
 
         Parameters
         ----------
-        Config: Dictionnary
+        config: Dictionnary
 
         Returns
         -------
@@ -107,5 +73,4 @@ def print_conf(config):
         print(key, ': ', config[key])
     
     return()
-
 # -----------------------------------------------------------------------

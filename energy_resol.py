@@ -257,9 +257,8 @@ def meas_energy_r(fulldirname):
     fig = plt.figure(figsize=(9, 7))
     nbins = 30
     tmin, tmax = -1, 3
-    #Emin = np.min(np.concatenate((E0, Ecor1, Ecor2)))-1
-    #Emax = np.max(np.concatenate((E0, Ecor1, Ecor2)))+1
-    Emin, Emax = 6985, 7015
+    Emin = np.floor(np.min(np.concatenate((Ecor1, Ecor2))))
+    Emax = np.floor(np.max(np.concatenate((Ecor1, Ecor2))))+1
     Emaxrange = n_pulse / 8
 
     ax3 = fig.add_subplot(2, 2, 1)
@@ -267,13 +266,13 @@ def meas_energy_r(fulldirname):
     ax3.axis([tmin, tmax, Emin, Emax])
     ax3.set_xlabel(r'Time (samples)')
     ax3.set_ylabel(r'Energy (Ev)')
-    ax3.legend(loc='lower left')
+    ax3.legend(loc='best')
 
     ax4 = fig.add_subplot(2, 2, 2)
-    ax4.hist(Ecor1, nbins)
+    #ax4.hist(Ecor1, nbins)
     n, bins, patches = ax4.hist(Ecor1, nbins, density=False, facecolor='g', alpha=0.75)
     sum1 = np.sum(n)/nbins
-    histo(ax4, Ecor1, sum1, n_pulse)
+    max_gauss1 = gauss_fit(ax4, Ecor1, sum1, n_pulse)
     ax4.axis([Emin, Emax, 0, Emaxrange])
     ax4.set_ylabel(r'Counts')
     ax4.set_xlabel(r'Energy (eV)')
@@ -283,16 +282,20 @@ def meas_energy_r(fulldirname):
     ax5.axis([tmin, tmax, Emin, Emax])
     ax5.set_xlabel(r'Time (samples)')
     ax5.set_ylabel(r'Energy (Ev)')
-    ax5.legend(loc='lower left')
+    ax5.legend(loc='best')
 
     ax6 = fig.add_subplot(2, 2, 4)
-    ax6.hist(Ecor2, nbins)
+    #ax6.hist(Ecor2, nbins)
     n, bins, patches = ax6.hist(Ecor2, nbins, density=False, facecolor='b', alpha=0.75)
     sum1 = np.sum(n)/nbins
-    histo(ax6, Ecor2, sum1, n_pulse)
+    max_gauss2 = gauss_fit(ax6, Ecor2, sum1, n_pulse)
     ax6.set_ylabel(r'Counts')
     ax6.set_xlabel(r'Energy (eV)')
     ax6.axis([Emin, Emax, 0, Emaxrange])
+
+    max_gauss = max(max_gauss1, max_gauss2)
+    ax4.set_ylim = ([0, 1.2*max_gauss])
+    ax6.set_ylim = ([0, 1.2*max_gauss])
 
     fig.tight_layout()
     plt.savefig(pltfilename+'_2.png', bbox_inches='tight')
@@ -305,7 +308,7 @@ def gauss(x, *p):
     return A*np.exp(-(x-mu)**2/(2.*sigma**2))
 
 # -----------------------------------------------------------------------------
-def histo(ax, E, sum1, counts):
+def gauss_fit(ax, E, sum1, counts):
     hist, bin_edges = np.histogram(E, density=True)
     bin_centres = (bin_edges[:-1] + bin_edges[1:])/2
 
@@ -322,5 +325,6 @@ def histo(ax, E, sum1, counts):
     ax.plot(xE, hist_fit*f, '--r', label='Fitted data', linewidth=2)
     ax.text(0.05, 0.9, 'FWHM={0:4.2f}eV'.format(fwhm), transform=ax.transAxes)
     ax.text(0.05, 0.85, 'Nb counts={0:4d}'.format(counts), transform=ax.transAxes)
+    return(np.max(hist_fit*f))
 
 # -----------------------------------------------------------------------------

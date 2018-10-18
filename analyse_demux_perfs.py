@@ -1,16 +1,10 @@
-from DEMUX_TBox.general_tools import get_conf, print_conf
+from DEMUX_TBox.general_tools import get_conf_csv, print_conf
 from DEMUX_TBox.gbw import process_GBW
 from DEMUX_TBox.dumps import process_dump, processIQ_multi
 from DEMUX_TBox.energy_resol import meas_energy_r
 import os
 
-config=get_conf()
-#dirname = '20181009_095800'
-#dirname = '20181009_122600'
-#dirname = '20181011_093000'
-#dirname = '20181011_115900'
-#dirname = '20181011_172100'
-#dirname = '20181012_160900'
+config=get_conf_csv()
 dirname = '20181017_091738'
 
 

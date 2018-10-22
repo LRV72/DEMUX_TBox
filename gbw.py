@@ -73,7 +73,7 @@ def get_BW(amplitudesdB, leveldB=3):
     return(i_max)
 
 # -----------------------------------------------------------------------
-def process_GBW(fulldirname, dumptype, chan):
+def process_GBW(fulldirname, config, dumptype, chan):
     r"""
         This function reads data from several DRE IQ data files
         to compute the Gain BadWidth product (GBW).
@@ -101,8 +101,8 @@ def process_GBW(fulldirname, dumptype, chan):
     fs = 20e6
     pix_test=40
 
-    datadirname = os.path.join(fulldirname, 'data')
-    plotdirname = os.path.join(fulldirname, 'plots')
+    datadirname = os.path.join(fulldirname, config['dir_data'])
+    plotdirname = os.path.join(fulldirname, config['dir_plots'])
     if not os.path.isdir(plotdirname):
         os.mkdir(plotdirname)
 

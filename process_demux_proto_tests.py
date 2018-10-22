@@ -18,9 +18,9 @@ def process_demux_proto_tests(dirname):
     # Processing "Gain bandwidth characterization" 
     chan=0
     dumptype = "IQ-ALL"
-    process_GBW(fulldirname, dumptype, chan)
+    process_GBW(fulldirname, config, dumptype, chan)
     dumptype = "IQ-TST"
-    process_GBW(fulldirname, dumptype, chan)
+    process_GBW(fulldirname, config, dumptype, chan)
 
     # -----------------------------------------------------------------------
     # Processing "Carriers spectra characterization"
@@ -29,6 +29,6 @@ def process_demux_proto_tests(dirname):
 
     # -----------------------------------------------------------------------
     # Processing "Energy resolution characterization"
-    meas_energy_r(fulldirname)
+    meas_energy_r(fulldirname, config)
 
 # ---------------------------------------------------------------------------

@@ -28,15 +28,15 @@ def get_test_pix(filename):
     return(t, modulus)
 
 #------------------------------------------------------------------------------
-def meas_energy_r(fulldirname):
+def meas_energy_r(fulldirname, config):
 
     N=2048
     seuil=70
     ind=3
     fs=20e6*2**7
 
-    datadirname = os.path.join(fulldirname, 'data')
-    plotdirname = os.path.join(fulldirname, 'plots')
+    datadirname = os.path.join(fulldirname, config['dir_data'])
+    plotdirname = os.path.join(fulldirname, config['dir_plots'])
     if not os.path.isdir(plotdirname):
         os.mkdir(plotdirname)
 

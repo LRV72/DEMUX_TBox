@@ -29,8 +29,8 @@ def process_dump(fulldirname, config, fs=20e6, Max_duration=0.2):
 
         """
 
-    datadirname = os.path.join(fulldirname, 'data')
-    plotdirname = os.path.join(fulldirname, 'plots')
+    datadirname = os.path.join(fulldirname, config['dir_data'])
+    plotdirname = os.path.join(fulldirname, config['dir_plots'])
     if not os.path.isdir(plotdirname):
         os.mkdir(plotdirname)
 

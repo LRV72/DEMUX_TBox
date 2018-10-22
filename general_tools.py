@@ -23,6 +23,37 @@
 import os, csv
 
 # -----------------------------------------------------------------------
+def get_csv(filename):
+    r"""
+        This function reads a dictionnary from a csv file.
+
+        Parameters:
+
+        filename: string
+        The name of the csv file
+
+        Returns
+        -------
+        dictionnary: dictionnary
+
+        """
+
+    dictionnary={}
+
+    if not os.path.exists(filename):
+        print("Configuration file not found.")
+        print("It is required to define the path.")
+    else:
+        with open(filename, newline='') as csvfile:
+            dict_reader = csv.reader(csvfile, delimiter=';', quotechar='|')
+            for row in dict_reader:
+                try:    # for numbers
+                    dictionnary[row[0]]=float(row[1].replace(',','.'))
+                except: # for strings
+                    dictionnary[row[0]]=row[1].replace(',','.')
+    return(dictionnary)
+
+# -----------------------------------------------------------------------
 def get_conf_csv():
     r"""
         This function gets the configuration for the data processing of
@@ -35,22 +66,7 @@ def get_conf_csv():
 
         """
 
-    config={}
-    conffilename = "demux_tools_cfg.csv"
-
-    if not os.path.exists(conffilename):
-        print("Configuration file not found.")
-        print("It is required to define the path.")
-    else:
-        with open(conffilename, newline='') as csvfile:
-            conf_reader = csv.reader(csvfile, delimiter=';', quotechar='|')
-            for row in conf_reader:
-                try:    # for numbers
-                    config[row[0]]=float(row[1].replace(',','.'))
-                except: # for strings
-                    config[row[0]]=row[1].replace(',','.')
-
-    return(config)
+    return(get_csv('demux_tools_cfg.csv'))
 
 # -----------------------------------------------------------------------
 def print_conf(config):

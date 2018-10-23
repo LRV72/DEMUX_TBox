@@ -11,8 +11,8 @@ def process_dump(fulldirname, config, fs=20e6, Max_duration=0.2):
         
         Parameters
         ----------
-        dumpname : string
-        The name of the dump file (with no path and no extension)
+        fulldirname : string
+        The name of the dump file (with the path)
 
         config : dictionnary
         Contains path and constants definitions
@@ -737,8 +737,8 @@ def processIQ_multi(fulldirname, config, fs=20e6, pix_zoom=40, window=False, BW_
     npts_max=2**17
     nb_short_files=0
 
-    datadirname = os.path.join(fulldirname, 'data')
-    plotdirname = os.path.join(fulldirname, 'plots')
+    datadirname = os.path.join(fulldirname, config['dir_data'])
+    plotdirname = os.path.join(fulldirname, config['dir_plots'])
     if not os.path.isdir(plotdirname):
         os.mkdir(plotdirname)
 

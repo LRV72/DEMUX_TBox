@@ -1,6 +1,6 @@
-path_tests;/Users/laurent/Documents/projets/Athena/Data/DUMPS/
+path_tests;/Users/laurent/Documents/projets/Athena/Data/DUMPS
 dir_data;DATA
-dir_hk;HK
+dir_hk;HK/HKcsv
 dir_plots;PLOTS
 dir_logs;LOGS
 ScBandMin;10

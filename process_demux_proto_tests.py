@@ -1,4 +1,4 @@
-from DEMUX_TBox.general_tools import get_conf_csv, print_conf
+from DEMUX_TBox.general_tools import get_conf, print_conf, get_hk, print_hk, plot_hk
 from DEMUX_TBox.gbw import process_GBW
 from DEMUX_TBox.dumps import process_dump, processIQ_multi
 from DEMUX_TBox.energy_resol import meas_energy_r
@@ -6,10 +6,15 @@ import os
 
 # ---------------------------------------------------------------------------
 def process_demux_proto_tests(dirname):
-    config=get_conf_csv()
+    config=get_conf()
 
     fulldirname = os.path.join(config['path_tests'], dirname)
 
+    # -----------------------------------------------------------------------
+    # Processing of hk files 
+    hk=get_hk(fulldirname, config)
+    plot_hk(hk, fulldirname, config)
+ 
     # -----------------------------------------------------------------------
     # Processing "BIAS, FEEDBAC and INPUT" dump files 
     process_dump(fulldirname, config, Max_duration=1.0)

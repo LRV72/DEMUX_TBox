@@ -382,7 +382,7 @@ def makeplots(t, sig, nb, sigfdb, fs, Noise_Power, fmin, fmax, io_str, plotfilen
 
     ax3 = fig.add_subplot(2, 2, 3)
     ax3.plot(f / 1e6, sigfdb, 'b', linewidth=1)
-    ax3.plot(f / 1e6, sigfdb, '.r')
+    #ax3.plot(f / 1e6, sigfdb, '.r')
     ax3.plot([0, f[-1]], [AllSinesRmsLevel, AllSinesRmsLevel], '--g', linewidth=1.5)
     ax3.plot([0, f[-1]], [NoiseReq, NoiseReq], '--k', linewidth=1.5)
     #ax3.plot([0, f[-1]], [Noise_Power, Noise_Power], '--k', linewidth=1.5)
